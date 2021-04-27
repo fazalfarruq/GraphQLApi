@@ -2,6 +2,7 @@ using GraphiQl;
 using GraphQL.Server;
 using GraphQL.Types;
 using GraphQLApi.Interfaces;
+using GraphQLApi.Mutation;
 using GraphQLApi.Query;
 using GraphQLApi.Schema;
 using GraphQLApi.Services;
@@ -30,6 +31,7 @@ namespace GraphQLApi
             services.AddTransient<IProductService, ProductService>();
             services.AddSingleton<ProductType>();
             services.AddSingleton<ProductQuery>();
+            services.AddSingleton<ProductMutation>();
             services.AddSingleton<ISchema, ProductSchema>();
 
             services.AddGraphQL(options =>
