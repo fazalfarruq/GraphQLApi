@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using GraphQLApi.Models;
 
 namespace GraphQLApi.Types
@@ -14,7 +10,6 @@ namespace GraphQLApi.Types
             Field(p => p.Id);
             Field(p => p.Name);
             Field(p => p.Price);
-
         }
     }
 }
