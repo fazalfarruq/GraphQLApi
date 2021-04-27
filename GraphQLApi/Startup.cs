@@ -1,4 +1,5 @@
 using GraphiQl;
+using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.Types;
 using GraphQLApi.Data;
@@ -34,7 +35,8 @@ namespace GraphQLApi
             services.AddTransient<ProductType>();
             services.AddTransient<ProductQuery>();
             services.AddTransient<ProductMutation>();
-            services.AddTransient<ISchema, ProductSchema>();
+            services.AddTransient<ISchema,
+                ProductSchema>(s => new ProductSchema(new SelfActivatingServiceProvider(s)));
 
             services.AddGraphQL(options =>
             {
