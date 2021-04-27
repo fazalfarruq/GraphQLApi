@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using GraphQLApi.Data;
 using GraphQLApi.Interfaces;
 using GraphQLApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraphQLApi.Services
 {
@@ -16,37 +18,37 @@ namespace GraphQLApi.Services
             _dbContext = dbContext;
         }
 
-        public Product GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            return _dbContext.Products.Find(id);
+            return await _dbContext.Products.FindAsync(id);
         }
 
-        public List<Product> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
-            return _dbContext.Products.ToList();
+            return await _dbContext.Products.ToListAsync();
         }
 
-        public Product AddProduct(Product product)
+        public async Task<Product> AddProduct(Product product)
         {
-            _dbContext.Products.Add(product);
-            _dbContext.SaveChanges();
+            await _dbContext.Products.AddAsync(product);
+            await _dbContext.SaveChangesAsync();
             return product;
         }
 
-        public Product UpdateProduct(int id, Product product)
+        public async Task<Product> UpdateProduct(int id, Product product)
         {
-            var productObj = GetProductById(id);
+            var productObj = await GetProductById(id);
             productObj.Name = product.Name;
             productObj.Price = product.Price;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return product;
         }
 
-        public void DeleteProduct(int id)
+        public async Task DeleteProduct(int id)
         {
-            var productToRemove = GetProductById(id);
+            var productToRemove = await GetProductById(id);
             _dbContext.Products.Remove(productToRemove);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

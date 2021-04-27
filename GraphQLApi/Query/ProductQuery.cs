@@ -9,12 +9,14 @@ namespace GraphQLApi.Query
     {
         public ProductQuery(IProductService productService)
         {
-            Field<ListGraphType<ProductType>>("products",
-                resolve: context => productService.GetAllProducts());
+            FieldAsync<ListGraphType<ProductType>>("products",
+                description: "will get all products",
+                resolve: async context => await productService.GetAllProducts());
 
-            Field<ProductType>("product",
+            FieldAsync<ProductType>("product",
+                description:"will return a single product for a given id",
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context => productService.GetProductById(context.GetArgument<int>("id")));
+                resolve: async context => await productService.GetProductById(context.GetArgument<int>("id")));
         }
     }
 }

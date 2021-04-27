@@ -40,6 +40,7 @@ namespace GraphQLApi
             {
                 options.EnableMetrics = false;
             }).AddSystemTextJson();
+            
 
             services.AddDbContext<GraphQlDbContext>(o => o.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=GraphQLDb; Integrated Security = True"));
         }
