@@ -6,11 +6,11 @@ using GraphQL.Types;
 
 namespace GraphQLApi.Types
 {
-    public class ProductInputType : InputObjectGraphType
+    public sealed class ProductInputType : InputObjectGraphType
     {
         public ProductInputType()
         {
-            Field<IntGraphType>("id");
+            Field<IntGraphType>().Name("id").Description("this is name");
             Field<StringGraphType>("name");
             Field<FloatGraphType>("price");
         }

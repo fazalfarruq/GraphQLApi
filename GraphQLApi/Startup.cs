@@ -1,6 +1,7 @@
 using GraphiQl;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
+using GraphQL.Server.Ui.Voyager;
 using GraphQL.Types;
 using GraphQLApi.Data;
 using GraphQLApi.Interfaces;
@@ -42,9 +43,8 @@ namespace GraphQLApi
             {
                 options.EnableMetrics = false;
             }).AddSystemTextJson();
-            
 
-            services.AddDbContext<GraphQlDbContext>(o => o.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=GraphQLDb; Integrated Security = True"));
+            services.AddDbContext<GraphQlDbContext>(o => o.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=GraphQLDb; Integrated Security = True"), ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +58,11 @@ namespace GraphQLApi
             dbContext.Database.EnsureCreated();
             app.UseGraphiQl("/graphql");
             app.UseGraphQL<ISchema>();
+
+            app.UseGraphQLVoyager(new VoyagerOptions()
+            {
+                GraphQLEndPoint = "/graphql"
+            });
         }
     }
 }
